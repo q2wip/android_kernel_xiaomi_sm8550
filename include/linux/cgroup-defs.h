@@ -46,7 +46,7 @@ enum cgroup_subsys_id {
 };
 #undef SUBSYS
 
-#if IS_ENABLED(CONFIG_CGROUP_PIDS)
+#if !defined(__GENKSYMS__) && IS_ENABLED(CONFIG_CGROUP_PIDS)
 #define CGROUP_SUBSYS_KABI_COUNT	(CGROUP_SUBSYS_COUNT - 1)
 #else
 #define CGROUP_SUBSYS_KABI_COUNT	CGROUP_SUBSYS_COUNT
@@ -218,7 +218,7 @@ struct css_set {
 
 	/* reference count */
 	refcount_t refcount;
-#if IS_ENABLED(CONFIG_CGROUP_PIDS)
+#if IS_ENABLED(CONFIG_CGROUP_PIDS) && !defined(__GENKSYMS__)
 	u32 pids_ext_low;
 #endif
 
@@ -235,7 +235,7 @@ struct css_set {
 
 	/* internal task count, protected by css_set_lock */
 	int nr_tasks;
-#if IS_ENABLED(CONFIG_CGROUP_PIDS)
+#if IS_ENABLED(CONFIG_CGROUP_PIDS) && !defined(__GENKSYMS__)
 	u32 pids_ext_high;
 #endif
 
@@ -496,7 +496,7 @@ struct cgroup {
 	int nr_populated_threaded_children;
 
 	int nr_threaded_children;	/* # of live threaded child cgroups */
-#if IS_ENABLED(CONFIG_CGROUP_PIDS)
+#if IS_ENABLED(CONFIG_CGROUP_PIDS) && !defined(__GENKSYMS__)
 	u32 pids_ext_low;
 #endif
 
@@ -579,7 +579,7 @@ struct cgroup {
 
 	/* Used to store internal freezer state */
 	struct cgroup_freezer_state freezer;
-#if IS_ENABLED(CONFIG_CGROUP_PIDS)
+#if IS_ENABLED(CONFIG_CGROUP_PIDS) && !defined(__GENKSYMS__)
 	u32 pids_ext_high;
 #endif
 
