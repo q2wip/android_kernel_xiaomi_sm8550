@@ -653,7 +653,9 @@ struct cfs_rq {
 	int			idle;
 
 #ifdef CONFIG_CFS_BANDWIDTH
+#ifndef __GENKSYMS__
 	struct cfs_rq_bandwidth *cfs_bandwidth;
+#endif
 #endif /* CONFIG_CFS_BANDWIDTH */
 #endif /* CONFIG_FAIR_GROUP_SCHED */
 };

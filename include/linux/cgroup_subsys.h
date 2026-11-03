@@ -69,7 +69,7 @@ SUBSYS(debug)
 #endif
 
 /* Keep optional post-GKI controllers after the frozen subsystem IDs. */
-#if IS_ENABLED(CONFIG_CGROUP_PIDS)
+#if IS_ENABLED(CONFIG_CGROUP_PIDS) && !defined(__GENKSYMS__)
 SUBSYS(pids)
 #endif
 

@@ -174,6 +174,18 @@ static const char *cgroup_subsys_name[] = {
 #include <linux/cgroup_subsys.h>
 #undef SUBSYS
 
+/*
+ * pids is hidden from the genksyms pass so that the frozen cgroup enum and
+ * struct CRCs stay identical to the stock kernel. The keys are still
+ * exported at runtime, so give genksyms explicit declarations to version.
+ */
+#if defined(__GENKSYMS__) && IS_ENABLED(CONFIG_CGROUP_PIDS)
+extern struct static_key_true pids_cgrp_subsys_enabled_key;
+extern struct static_key_true pids_cgrp_subsys_on_dfl_key;
+EXPORT_SYMBOL_GPL(pids_cgrp_subsys_enabled_key);
+EXPORT_SYMBOL_GPL(pids_cgrp_subsys_on_dfl_key);
+#endif
+
 #define SUBSYS(_x) [_x ## _cgrp_id] = &_x ## _cgrp_subsys_enabled_key,
 static struct static_key_true *cgroup_subsys_enabled_key[] = {
 #include <linux/cgroup_subsys.h>
